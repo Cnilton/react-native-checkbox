@@ -10,6 +10,15 @@ export default class CheckBox extends Component {
     };
   }
 
+  handleColor = () => {
+    // var currentColor =
+    //   this.props.color !== undefined ? this.props.color : '#23f752';
+    // return this.state.color.interpolate({
+    //   inputRange: [0, 1],
+    //   outputRange: ['#fff', currentColor],
+    // });
+  };
+
   render() {
     let {textStyle, boxStyle, containerStyle} = this.props;
 
