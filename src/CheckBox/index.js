@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 
 import {View, Text} from 'react-native';
 
-// import { Container } from './styles';
-
 export default class CheckBox extends Component {
   constructor(props) {
     super(props);
@@ -14,9 +12,25 @@ export default class CheckBox extends Component {
 
   render() {
     let {textStyle, boxStyle, containerStyle} = this.props;
+
     textStyle = {...textStyle, color: '#000'};
-    boxStyle = {...boxStyle, backgroundColor: '#0f0'};
-    containerStyle = {...containerStyle, color: '#f00'};
+
+    boxStyle = {
+      ...boxStyle,
+      borderRadius: 3,
+      width: 20,
+      height: 20,
+      borderWidth: 1,
+      borderColor: '#ccc',
+    };
+
+    containerStyle = {
+      ...containerStyle,
+      flexDirection: 'row',
+      flex: 1,
+      backgroundColor: '#398',
+    };
+
     return (
       <View style={containerStyle}>
         <View style={boxStyle} />
