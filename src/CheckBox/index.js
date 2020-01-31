@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
 
-import {View, Text} from 'react-native';
+import {View, Text, TouchableOpacity, Animated, Image} from 'react-native';
+
+import check from '../assets/images/check.png';
+
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
 export default class CheckBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      secureText: true,
+      label: '',
     };
   }
 
@@ -19,6 +23,20 @@ export default class CheckBox extends Component {
     // });
   };
 
+  componentWillMount() {
+    this.animatedValue = new Animated.Value(0);
+  }
+  componentDidMount() {
+    !this.props.value && this.animateBackGround();
+  }
+
+  animateBackGround = () => {
+    Animated.timing(this.animatedValue, {
+      toValue: 150,
+      duration: 1500,
+    }).start();
+  };
+
   render() {
     let {textStyle, boxStyle, containerStyle} = this.props;
 
@@ -26,6 +44,7 @@ export default class CheckBox extends Component {
 
     boxStyle = {
       ...boxStyle,
+      marginRight: 10,
       borderRadius: 3,
       width: 20,
       height: 20,
@@ -36,14 +55,30 @@ export default class CheckBox extends Component {
     containerStyle = {
       ...containerStyle,
       flexDirection: 'row',
-      flex: 1,
-      backgroundColor: '#398',
+    };
+
+    const interpolateColor = this.animatedValue.interpolate({
+      inputRange: [0, 150],
+      outputRange: ['rgb(255,255,255)', 'rgb(51, 250, 170)'],
+    });
+
+    const interpolateColor2 = this.animatedValue.interpolate({
+      inputRange: [0, 150],
+      outputRange: ['rgb(51, 250, 170)', 'rgb(255,255,255)'],
+    });
+
+    const animatedStyle = {
+      backgroundColor: this.props.value ? interpolateColor : interpolateColor2,
     };
 
     return (
       <View style={containerStyle}>
-        <View style={boxStyle} />
-        <Text style={textStyle}>Blabla</Text>
+        <AnimatedTouchable
+          onPress={() => this.props.onChangeValue()}
+          style={[boxStyle, animatedStyle]}>
+          <Image style={{backgroundColor: '#00000000'}} source={check} />
+        </AnimatedTouchable>
+        <Text style={textStyle}>{this.props.label}</Text>
       </View>
     );
   }
