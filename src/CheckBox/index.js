@@ -11,7 +11,10 @@ export default class CheckBox extends Component {
     super(props);
     this.state = {
       label: '',
+      value: false,
+      animate: false,
     };
+    this.animatedValue = new Animated.Value(0);
   }
 
   handleColor = () => {
@@ -23,31 +26,60 @@ export default class CheckBox extends Component {
     // });
   };
 
-  componentWillMount() {
-    this.animatedValue = new Animated.Value(0);
-  }
-  componentDidMount() {
-    !this.props.value && this.animateBackGround();
+  hexToRgb = hex => {
+    var a = hex
+      .replace(
+        /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
+        (m, r, g, b) => '#' + r + r + g + g + b + b,
+      )
+      .substring(1)
+      .match(/.{2}/g)
+      .map(x => parseInt(x, 16));
+    return `rgb(${a[0]},${a[1]},${a[2]})`;
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.value === props.value) {
+      return null;
+    } else {
+      if (props.value) {
+        return {
+          value: true,
+          animate: true,
+        };
+      } else {
+        return {
+          value: false,
+          animate: true,
+        };
+      }
+    }
   }
 
   animateBackGround = () => {
     Animated.timing(this.animatedValue, {
       toValue: 150,
       duration: 1500,
-    }).start();
+    }).start(() => {
+      this.animatedValue = new Animated.Value(0);
+    });
   };
 
   render() {
+    console.log(this.props.value);
     let {textStyle, boxStyle, containerStyle} = this.props;
 
     textStyle = {...textStyle, color: '#000'};
 
     boxStyle = {
       ...boxStyle,
+      justifyContent: 'center',
+      alignItems: 'center',
       marginRight: 10,
       borderRadius: 3,
       width: 20,
       height: 20,
+      backgroundColor: '#fff',
       borderWidth: 1,
       borderColor: '#ccc',
     };
@@ -57,25 +89,33 @@ export default class CheckBox extends Component {
       flexDirection: 'row',
     };
 
-    const interpolateColor = this.animatedValue.interpolate({
+    const interpolateCheck = this.animatedValue.interpolate({
       inputRange: [0, 150],
-      outputRange: ['rgb(255,255,255)', 'rgb(51, 250, 170)'],
+      outputRange: [
+        'rgb(255,255,255)',
+        this.hexToRgb(this.props.tintColor).toString(),
+      ],
     });
 
-    const interpolateColor2 = this.animatedValue.interpolate({
+    const interpolateUncheck = this.animatedValue.interpolate({
       inputRange: [0, 150],
-      outputRange: ['rgb(51, 250, 170)', 'rgb(255,255,255)'],
+      outputRange: [
+        this.hexToRgb(this.props.tintColor).toString(),
+        'rgb(255,255,255)',
+      ],
     });
 
     const animatedStyle = {
-      backgroundColor: this.props.value ? interpolateColor : interpolateColor2,
+      backgroundColor: !this.props.value
+        ? interpolateCheck
+        : interpolateUncheck,
     };
 
     return (
       <View style={containerStyle}>
         <AnimatedTouchable
           onPress={() => this.props.onChangeValue()}
-          style={[boxStyle, animatedStyle]}>
+          style={[boxStyle, this.state.animate && animatedStyle]}>
           <Image style={{backgroundColor: '#00000000'}} source={check} />
         </AnimatedTouchable>
         <Text style={textStyle}>{this.props.label}</Text>

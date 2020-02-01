@@ -11,6 +11,13 @@ export default class src extends Component {
     check: false,
   };
 
+  handleChange = () => {
+    console.log(!this.state.check);
+    this.setState({
+      check: !this.state.check,
+    });
+  };
+
   render() {
     return (
       <View
@@ -20,14 +27,15 @@ export default class src extends Component {
           alignItems: 'center',
           backgroundColor: '#239292',
         }}>
-        <Text>Teste</Text>
+        {/* <Text>Teste</Text> */}
         <Checkbox
           label="Check"
+          tintColor={'#f2792f'}
           boxStyle={{}}
           containerStyle={{}}
           textStyle={{}}
           value={this.state.check}
-          onChangeValue={() => this.setState({check: !this.state.check})}
+          onChangeValue={() => this.handleChange()}
         />
       </View>
     );
