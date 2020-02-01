@@ -1,7 +1,7 @@
 {
   "name": "react-native-customizable-checkbox",
   "description": "A simple and fully customizable React Native Checkbox component.",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "main": "index.js",
   "repository": {
     "type": "git",

@@ -1,1 +1,3 @@
-export {CheckBox} from './src/CheckBox';
+import CheckBox from './src/CheckBox';
+
+export default CheckBox;
