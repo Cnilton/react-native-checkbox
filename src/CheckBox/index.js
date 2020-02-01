@@ -1,6 +1,13 @@
 import React, {Component} from 'react';
 
-import {View, Text, TouchableOpacity, Animated, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Easing,
+  Animated,
+  Image,
+} from 'react-native';
 
 import check from '../assets/images/check.png';
 
@@ -10,21 +17,11 @@ export default class CheckBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      label: '',
       value: false,
       animate: false,
     };
     this.animatedValue = new Animated.Value(0);
   }
-
-  handleColor = () => {
-    // var currentColor =
-    //   this.props.color !== undefined ? this.props.color : '#23f752';
-    // return this.state.color.interpolate({
-    //   inputRange: [0, 1],
-    //   outputRange: ['#fff', currentColor],
-    // });
-  };
 
   hexToRgb = hex => {
     var a = hex
@@ -59,20 +56,31 @@ export default class CheckBox extends Component {
   animateBackGround = () => {
     Animated.timing(this.animatedValue, {
       toValue: 150,
-      duration: 1500,
+      duration: 5000,
+      easing: Easing.linear,
+      useNativeDriver:
+        this.props.useNativeDriver !== undefined
+          ? this.props.useNativeDriver
+          : false,
     }).start(() => {
       this.animatedValue = new Animated.Value(0);
     });
   };
 
   render() {
-    console.log(this.props.value);
+    let colorActive =
+      this.props.colorActive !== undefined ? this.props.colorActive : '#239292';
+
+    let colorInactive =
+      this.props.colorInactive !== undefined
+        ? this.props.colorInactive
+        : '#fff';
+
     let {textStyle, boxStyle, containerStyle} = this.props;
 
-    textStyle = {...textStyle, color: '#000'};
+    textStyle = {color: '#000', ...textStyle};
 
     boxStyle = {
-      ...boxStyle,
       justifyContent: 'center',
       alignItems: 'center',
       marginRight: 10,
@@ -82,26 +90,27 @@ export default class CheckBox extends Component {
       backgroundColor: '#fff',
       borderWidth: 1,
       borderColor: '#ccc',
+      ...boxStyle,
     };
 
     containerStyle = {
-      ...containerStyle,
       flexDirection: 'row',
+      ...containerStyle,
     };
 
     const interpolateCheck = this.animatedValue.interpolate({
       inputRange: [0, 150],
       outputRange: [
-        'rgb(255,255,255)',
-        this.hexToRgb(this.props.tintColor).toString(),
+        this.hexToRgb(colorInactive).toString(),
+        this.hexToRgb(colorActive).toString(),
       ],
     });
 
     const interpolateUncheck = this.animatedValue.interpolate({
       inputRange: [0, 150],
       outputRange: [
-        this.hexToRgb(this.props.tintColor).toString(),
-        'rgb(255,255,255)',
+        this.hexToRgb(colorActive).toString(),
+        this.hexToRgb(colorInactive).toString(),
       ],
     });
 
@@ -116,7 +125,14 @@ export default class CheckBox extends Component {
         <AnimatedTouchable
           onPress={() => this.props.onChangeValue()}
           style={[boxStyle, this.state.animate && animatedStyle]}>
-          <Image style={{backgroundColor: '#00000000'}} source={check} />
+          <Image
+            style={{backgroundColor: '#00000000'}}
+            source={
+              this.props.checkImage !== undefined
+                ? this.props.checkImage
+                : check
+            }
+          />
         </AnimatedTouchable>
         <Text style={textStyle}>{this.props.label}</Text>
       </View>

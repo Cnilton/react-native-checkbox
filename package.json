@@ -1,18 +1,37 @@
 {
   "name": "react-native-checkbox",
+  "description": "A simple and fully customizable React Native Checkbox component.",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cnilton/react-native-checkbox.git"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-component",
+    "react",
+    "react native",
+    "mobile",
+    "ios",
+    "android",
+    "checkbox",
+    "react-native-checkbox",
+    "customizable"
+  ],
+  "author": "Caio Nilton",
+  "license": "MIT",
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.5"
   },
+  "bugs": {
+    "url": "https://github.com/Cnilton/react-native-checkbox/issues"
+  },
+  "homepage": "https://github.com/Cnilton/react-native-checkbox#readme",
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/runtime": "^7.8.3",
