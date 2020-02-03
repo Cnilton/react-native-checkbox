@@ -1,13 +1,6 @@
 import React, {Component} from 'react';
 
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Easing,
-  Animated,
-  Image,
-} from 'react-native';
+import {Text, TouchableOpacity, Easing, Animated, Image} from 'react-native';
 
 import check from '../assets/images/check.png';
 
@@ -67,6 +60,15 @@ export default class CheckBox extends Component {
     });
   };
 
+  handleContainerClick = () => {
+    if (
+      this.props.isContainerClickable !== undefined &&
+      this.props.isContainerClickable
+    ) {
+      this.props.onChangeValue();
+    }
+  };
+
   render() {
     let colorActive =
       this.props.colorActive !== undefined ? this.props.colorActive : '#239292';
@@ -121,7 +123,12 @@ export default class CheckBox extends Component {
     };
 
     return (
-      <View style={containerStyle}>
+      <TouchableOpacity
+        activeOpacity={
+          this.props.isContainerClickable !== undefined ? 1.0 : 0.6
+        }
+        onPress={() => this.handleContainerClick()}
+        style={containerStyle}>
         <AnimatedTouchable
           onPress={() => this.props.onChangeValue()}
           style={[boxStyle, this.state.animate && animatedStyle]}>
@@ -135,7 +142,7 @@ export default class CheckBox extends Component {
           />
         </AnimatedTouchable>
         <Text style={textStyle}>{this.props.label}</Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

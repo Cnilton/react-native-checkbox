@@ -57,7 +57,8 @@ render(){
   return (
     <Checkbox
         label="Check"
-        // useNativeDriver={true} // default false
+        // isContainerClickable={true} // (default false), when true, clicks on checkbox container will change it's state
+        // useNativeDriver={true} // (default false)
         // checkImage={pathToImage} image for check mark
         // colorActive={"#0ff"} hex color when checkbox is marked
         // colorInactive={"#fff"} hex color when checkbox is unmarked
