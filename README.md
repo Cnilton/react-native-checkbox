@@ -1,3 +1,6 @@
+![npm](https://img.shields.io/npm/v/react-native?color=%232fa90f&label=react-native&style=plastic)
+![npm](https://img.shields.io/npm/dm/react-native-customizable-checkbox?style=plastic)
+
 # About
 
 This is a React-Native Checkbox component that you can freely modify its styles.
@@ -18,7 +21,7 @@ yarn add react-native-customizable-checkbox
 
 ## Basic Usage
 
-```java
+```javascript
 //...
 
 state = {
@@ -31,7 +34,7 @@ handleChange = () => {
 
 render(){
   return (
-    <Checkbox
+    <CheckBox
       label="Check"
       value={this.state.check} // required
       onChangeValue={() => this.handleChange()} //required
@@ -42,7 +45,7 @@ render(){
 
 ## Advanced Usage
 
-```
+```javascript
 //...
 
 state = {
@@ -75,10 +78,10 @@ render(){
 - All commented options above are optional.
 - If you want to use the "checkImage" prop, provide a image path, for example:
 
-```
-import check from "../assets/images/yourImage"
+```javascript
+import check from '../assets/images/yourImage';
 // ...
-checkImage={check}
+checkImage = {check};
 ```
 
 ## Contributing
