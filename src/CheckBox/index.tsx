@@ -4,19 +4,34 @@ import {Text, TouchableOpacity, Easing, Animated, Image} from 'react-native';
 
 import check from '../assets/images/check.png';
 
+interface State {
+  value?: Boolean;
+}
+
+interface Props {
+  value: Boolean;
+  onChangeValue: Function;
+  isContainerClickable?: true | false;
+  useNativeDriver?: Boolean;
+  colorActive?: String;
+  colorInactive?: String;
+  textStyle?: Object;
+  boxStyle?: Object;
+  containerStyle?: Object;
+  label?: String;
+  checkImage?: String;
+}
+
 const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
-export default class CheckBox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: false,
-      animate: false,
-    };
-    this.animatedValue = new Animated.Value(0);
-  }
+export default class CheckBox extends Component<Props> {
+  state = {
+    value: false,
+    animate: false,
+    animatedValue: new Animated.Value(0),
+  };
 
-  hexToRgb = hex => {
+  hexToRgb = (hex: String) => {
     var a = hex
       .replace(
         /^#?([a-f\d])([a-f\d])([a-f\d])$/i,
@@ -28,7 +43,7 @@ export default class CheckBox extends Component {
     return `rgb(${a[0]},${a[1]},${a[2]})`;
   };
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props: Props, state: State) {
     if (state.value === props.value) {
       return null;
     } else {
@@ -47,7 +62,7 @@ export default class CheckBox extends Component {
   }
 
   animateBackGround = () => {
-    Animated.timing(this.animatedValue, {
+    Animated.timing(this.state.animatedValue, {
       toValue: 150,
       duration: 5000,
       easing: Easing.linear,
@@ -56,7 +71,7 @@ export default class CheckBox extends Component {
           ? this.props.useNativeDriver
           : false,
     }).start(() => {
-      this.animatedValue = new Animated.Value(0);
+      this.state.animatedValue = new Animated.Value(0);
     });
   };
 
@@ -100,7 +115,7 @@ export default class CheckBox extends Component {
       ...containerStyle,
     };
 
-    const interpolateCheck = this.animatedValue.interpolate({
+    const interpolateCheck = this.state.animatedValue.interpolate({
       inputRange: [0, 150],
       outputRange: [
         this.hexToRgb(colorInactive).toString(),
@@ -108,7 +123,7 @@ export default class CheckBox extends Component {
       ],
     });
 
-    const interpolateUncheck = this.animatedValue.interpolate({
+    const interpolateUncheck = this.state.animatedValue.interpolate({
       inputRange: [0, 150],
       outputRange: [
         this.hexToRgb(colorActive).toString(),

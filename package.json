@@ -1,7 +1,7 @@
 {
   "name": "react-native-customizable-checkbox",
   "description": "A simple and fully customizable React Native Checkbox component.",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -41,5 +41,15 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "dependencies": {
+    "@types/jest": "^25.1.2",
+    "@types/react": "^16.9.19",
+    "@types/react-native": "^0.61.12",
+    "@types/react-test-renderer": "^16.9.2",
+    "prop-types": "^15.7.2",
+    "typescript": "^3.7.5",
+    "react": "*",
+    "react-native": "*"
   }
 }
