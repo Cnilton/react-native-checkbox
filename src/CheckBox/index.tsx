@@ -5,20 +5,31 @@ import {Text, TouchableOpacity, Easing, Animated, Image} from 'react-native';
 import check from '../assets/images/check.png';
 
 interface State {
-  value?: Boolean;
+  value?: boolean;
 }
 
 interface Props {
+  /** Required. Current state of the checkbox */
   value: Boolean;
+  /** Required. Callback for click on the checkbox */
   onChangeValue: Function;
+  /** Set true to make whole checkbox component container clickable for changing it's value */
   isContainerClickable?: true | false;
-  useNativeDriver?: Boolean;
+  /** Set true for making animations smoothier */
+  useNativeDriver?: boolean;
+  /** Set background color to the box when it's marked */
   colorActive?: String;
+  /** Set background color to the box when it's unmarked */
   colorInactive?: String;
+  /** Add style to the label */
   textStyle?: Object;
+  /** Add style to the box */
   boxStyle?: Object;
+  /** Add style to the container */
   containerStyle?: Object;
+  /** Label value */
   label?: String;
+  /** Pass custom image for indication as path */
   checkImage?: String;
 }
 
@@ -39,7 +50,7 @@ export default class CheckBox extends Component<Props> {
       )
       .substring(1)
       .match(/.{2}/g)
-      .map(x => parseInt(x, 16));
+      .map((x: string) => parseInt(x, 16));
     return `rgb(${a[0]},${a[1]},${a[2]})`;
   };
 
